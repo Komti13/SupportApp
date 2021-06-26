@@ -15,7 +15,8 @@ import Container from '@material-ui/core/Container';
 import AuthService from './../services/AuthService';
 // import SignUp from './SignUp';
 
-import { Link, BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Link, BrowserRouter, useHistory } from "react-router-dom";
+import { setEmitFlags } from 'typescript';
 
 function Copyright() {
     return (
@@ -63,19 +64,34 @@ export default function Login() {
             ...data,
             [name]: value
         })
-
-
     }
+    const history = useHistory();
+    const [error, seterror] = useState('')
+    const [passerror, setpasserror] = useState('')
+
     const [data, setdata] = useState(initialFieldValues);
     async function handleFormSubmit(e) {
         e.preventDefault();
-        const PostData = {
-            email: data.email,
-            password: data.password
+        if (data.email === '') {
+            seterror('merci de saisire un email');
         }
-        const response = await AuthService.doUserLogin(PostData);
-        // console.log(data.email,data.password);
-        console.log('response', response);
+        else if (data.password === '') {
+            setpasserror('merci de saisire votre mot de passe');
+
+        } else {
+            const PostData = {
+                email: data.email,
+                password: data.password
+            }
+            const response = await AuthService.doUserLogin(PostData);
+            // console.log(data.email,data.password);
+            console.log('response', response.access_token);
+
+            if (response.access_token !== undefined) {
+                history.push("/Home");
+            }
+        }
+    
     }
     const classes = useStyles();
 
@@ -83,6 +99,14 @@ export default function Login() {
 
 
         <Container component="main" maxWidth="xs">
+            <ul>
+                <li>
+                    <Link to="/signIn">Login</Link>
+                </li>
+                <li>
+                    <Link to="/signUp">Register</Link>
+                </li>
+            </ul>
             {/* <Route path="/signup" component={SignUp}></Route> */}
             <CssBaseline />
             <div className={classes.paper}>
@@ -94,9 +118,9 @@ export default function Login() {
                 </Typography>
                 <form className={classes.form} noValidate onSubmit={e => handleFormSubmit(e)}>
                     <TextField
+                        required
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         id="email"
                         label="Email Address"
@@ -105,10 +129,13 @@ export default function Login() {
                         autoFocus
                         onChange={handleInputChange}
                     />
+                    <div style={{'color':'red'}}>
+                        {error}
+                    </div>
                     <TextField
+                        required
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         name="password"
                         label="Password"
@@ -117,8 +144,12 @@ export default function Login() {
                         autoComplete="current-password"
                         onChange={handleInputChange}
                     />
+                    <div style={{ 'color': 'red' }}>
+                        {passerror}
+                    </div>
                     <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" name="remember"/>}
+
+                        control={<Checkbox value="remember" color="primary" name="remember" />}
                         label="Remember me"
                     />
                     <Button
@@ -132,7 +163,7 @@ export default function Login() {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <Link href="#" to="" variant="body2">
                                 Forgot password?
                             </Link>
                         </Grid>

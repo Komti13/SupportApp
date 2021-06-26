@@ -11,5 +11,15 @@ class UrlService {
     static registerUrl() {
         return apiDomain + 'api/register';
     }
+    static getdata() {
+        return apiDomain + 'api/tickets';
+    }
+    static add() {
+        return apiDomain + 'api/tickets';
+    }
+    static edit(id) {
+        console.log(id)
+        return apiDomain + 'api/tickets/'+id;
+    }
 }
 export default UrlService;
