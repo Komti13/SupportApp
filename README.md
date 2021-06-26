@@ -6,8 +6,11 @@ SupportApp
 -> composer install
 -> cd ./frontend
 -> npm install
-****then run your backend
+****create database named "envastcodechall" in your sql server
+****run this commands
 ->cd Backend
+->php artisan migrate
+****then run your backend
 -> php artisan serve
 ****then run the front
 -> cd./frontend
