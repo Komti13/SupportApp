@@ -14,7 +14,12 @@ interface editcredentials {
     description: String,
 
 }
+interface repliecredentials {
+    id: number,
+    content: String,
 
+}
+//CRUD service contains add methode for tickets and edit methode for tickets and addreplie methode for replies
 class addticket {
     async add(credentials: ticketcredentials) {
         try {
@@ -28,18 +33,22 @@ class addticket {
     }
     async edit(credentials: editcredentials) {
         try {
-            const headers = {
-                'Content-Type': 'application/json',
-                'Authorization': 'Access-Control-Allow-Headers'
-            }
-            
-            const response = await axios.post(UrlService.edit(credentials.id), credentials,{
-                headers: headers
-            });
+
+
+            const response = await axios.put(UrlService.edit(credentials.id), credentials);
             console.log(response.data)
-            
             return response.data;
-        } catch (error) {   
+        } catch (error) {
+            console.log("error", error.response);
+            return false;
+        }
+    }
+    async addreplie(credentials: repliecredentials) {
+        try {
+            const response = await axios.post(UrlService.addreplie(credentials.id), credentials);
+            console.log(response.data)
+            return response.data;
+        } catch (error) {
             console.log("error", error.response);
             return false;
         }

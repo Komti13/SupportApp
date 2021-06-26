@@ -2,11 +2,9 @@ import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 import { Link, BrowserRouter ,useHistory } from "react-router-dom";
 import CrudService from '../services/CrudService';
 
@@ -23,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%', // Fix IE 11 issue.
+        width: '100%',
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -32,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+    //form submisson and passing data to backend
 
 export default function AddTicket() {
     const initialFieldValues = {
@@ -59,10 +58,12 @@ export default function AddTicket() {
             description: data.description,
         }
         console.log("data", PostData)
+
+        //calling servicethat invoke backend methode
         const response = await CrudService.add(PostData);
         console.log('response', response);
         
-        history.push("/Home");
+        history.push("/home");
     }
     const classes = useStyles();
 

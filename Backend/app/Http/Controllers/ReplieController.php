@@ -34,7 +34,7 @@ class ReplieController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request)//store a replie to a specific ticket in data base and retun success message
     {
         $ticket = Ticket::findOrfail($request->id);
 
@@ -48,27 +48,6 @@ class ReplieController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Replie  $replie
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Replie $replie)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Replie  $replie
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Replie $replie)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

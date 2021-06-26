@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 
 const Tickets = () => {
     const [data, setdata] = useState([]);
+    //getting data from backend into state to display it later
     useEffect(async () => {
         const result = await axios.get(UrlService.getdata());
         setdata(result.data.data);
@@ -76,14 +77,20 @@ const Tickets = () => {
                                         Edit
                                     </Button>
                                 </Link>
+                                <Link to={{
+                                    pathname: "/addreplie/" + data[index].id,
+                                    id: data[index].id
+                                }}
+                                >
                                 <Button
-                                    //   onClick={() => { OnAccept(Candidatures[id]) }}
                                     size='small'
                                     variant="outlined"
                                     startIcon={<ReplyIcon />}
                                 >
                                     Reply
-                                </Button>
+                                    </Button>
+                                </Link>
+
                             </Grid>
 
                         </Grid >

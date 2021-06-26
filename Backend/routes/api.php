@@ -21,7 +21,14 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+//registration route
 Route::post('/register', [AuthController::class, 'register']);
+
+//Login route
 Route::post('/login', [AuthController::class, 'login']);
+
+//Get ,Post,PUT route for tickets
 Route::resource('tickets', TicketController::class);
+
+// Post PUT route for resource
 Route::resource('replies/{id}', ReplieController::class);

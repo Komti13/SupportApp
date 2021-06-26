@@ -69,6 +69,7 @@ export default function SignUp() {
 
     }
     const [data, setdata] = useState(initialFieldValues);
+
     async function handleFormSubmit(e) {
         e.preventDefault();
         const PostData = {
@@ -77,10 +78,9 @@ export default function SignUp() {
             password: data.password,
             password_confirmation:data.password_confirmation,
         }
-        console.log("data",PostData)
+        console.log("data", PostData)
+        //calling registation service and passing data
         const response = await AuthService.registration(PostData);
-        // console.log(data.email,data.password);
-        console.log('response', response);
     }
     const classes = useStyles();
 

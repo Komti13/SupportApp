@@ -68,10 +68,12 @@ export default function Login() {
     const history = useHistory();
     const [error, seterror] = useState('')
     const [passerror, setpasserror] = useState('')
-
     const [data, setdata] = useState(initialFieldValues);
+
+
     async function handleFormSubmit(e) {
         e.preventDefault();
+        //testing response errors before redirecting
         if (data.email === '') {
             seterror('merci de saisire un email');
         }
@@ -83,12 +85,12 @@ export default function Login() {
                 email: data.email,
                 password: data.password
             }
+        //calling login service and passing data
             const response = await AuthService.doUserLogin(PostData);
-            // console.log(data.email,data.password);
-            console.log('response', response.access_token);
-
             if (response.access_token !== undefined) {
-                history.push("/Home");
+                history.push("/home");
+            } else {
+                seterror('Merci de verifier les coordonnees entres');
             }
         }
     

@@ -4,6 +4,7 @@ if (process.env.NODE_ENV === 'production') {
 } else {
     apiDomain = 'http://localhost:8000/';
 }
+ //URL service that provide the right url for each methode POST PUT GET
 class UrlService {
     static loginUrl() {
         return apiDomain + 'api/login';
@@ -18,8 +19,10 @@ class UrlService {
         return apiDomain + 'api/tickets';
     }
     static edit(id) {
-        console.log(id)
-        return apiDomain + 'api/tickets/'+id;
+        return apiDomain + 'api/tickets/' + id;
+    }
+    static addreplie(id) {
+        return apiDomain + 'api/replies/' + id;
     }
 }
 export default UrlService;

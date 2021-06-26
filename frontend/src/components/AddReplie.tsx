@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.main,
     },
     form: {
-        width: '100%',
+        width: '100%', 
         marginTop: theme.spacing(1),
     },
     submit: {
@@ -31,13 +31,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-    //form submisson and passing data to backend
-export default function EditTicket(params) {
+
+export default function AddReplie() {
     const initialFieldValues = {
-        id: '',
-        category: '',
-        subject: '',
-        description: ''
+        id: 0,
+        content: '',
     }
     const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
         var { name, value } = e.target
@@ -45,25 +43,24 @@ export default function EditTicket(params) {
             ...data,
             [name]: value
         })
-
-
     }
 
+    const location = useLocation();
     const history = useHistory();
-    const location = useLocation()
     const [data, setdata] = useState(initialFieldValues);
 
+    //form submisson and passing data to backend
     async function handleFormSubmit(e) {
         e.preventDefault();
         const PostData = {
             id: location.id,
-            category: data.category,
-            subject: data.subject,
-            description: data.description,
+            content: data.content,
         }
+        console.log("data", PostData)
         //calling servicethat invoke backend methode
-        const response = await CrudService.edit(PostData);
+        const response = await CrudService.addreplie(PostData);
         console.log('response', response);
+
         history.push("/home");
     }
     const classes = useStyles();
@@ -80,37 +77,16 @@ export default function EditTicket(params) {
             <CssBaseline />
             <div className={classes.paper}>
 
-                <form className={classes.form} noValidate onSubmit={e => handleFormSubmit(e)} method="PUT">
+                <form className={classes.form} noValidate onSubmit={e => handleFormSubmit(e)}>
+
                     <TextField
                         variant="outlined"
                         margin="normal"
                         required
                         fullWidth
-                        id="name"
-                        label="Category"
-                        name="category"
-                        autoFocus
-                        onChange={handleInputChange}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="subject"
-                        label="subject"
-                        name="subject"
-                        autoFocus
-                        onChange={handleInputChange}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="description"
-                        label="description"
-                        id="description"
+                        name="content"
+                        label="content"
+                        id="content"
                         onChange={handleInputChange}
                     />
 
@@ -121,7 +97,7 @@ export default function EditTicket(params) {
                         color="primary"
                         className={classes.submit}
                     >
-                        Edit
+                        Add Replie
                     </Button>
 
                 </form>

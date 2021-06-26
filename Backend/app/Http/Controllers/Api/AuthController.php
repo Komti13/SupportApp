@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-
+    //Registration data pass from here and then saved in database
     public function register(Request $req)
     {
         $validatedData = $req->validate([
@@ -17,12 +17,14 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed',
         ]);
-       $validatedData['password'] = bcrypt($req->password);
+        $validatedData['password'] = bcrypt($req->password);
 
         $user = User::create($validatedData);
         $accessToken = $user->createToken('authToken')->accessToken;
         return response(['user' => $user, 'access_token' => $accessToken]);
     }
+    //Login data pass from here and then generating the token
+
     public function login(Request $req)
     {
         $loginData = $req->validate([
@@ -34,7 +36,7 @@ class AuthController extends Controller
 
         }
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
-        
+
         return response(['user' => auth()->user(), 'access_token' => $accessToken]);
 
     }
